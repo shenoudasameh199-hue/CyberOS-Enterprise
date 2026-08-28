@@ -1,8 +1,8 @@
 {
-  "app_name": "CyberOS Ultimate",
-  "version": "2.0",
-  "developer": "Shenouda Sameh",
-  "theme_color": "bright_blue",
-  "auto_save_reports": true,
-  "reports_dir": "reports"
+    "app_name": "CyberOS Ultimate",
+    "version": "3.0",
+    "developer": "Shenouda Sameh",
+    "theme_color": "bright_blue",
+    "auto_save_reports": true,
+    "reports_dir": "reports"
 }

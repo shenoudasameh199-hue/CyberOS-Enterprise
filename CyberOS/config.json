@@ -1,0 +1,9 @@
+{
+    "app_name": "CyberOS Ultimate",
+    "version": "5.0",
+    "developer": "Shenouda Sameh",
+    "edition": "Apex Intelligence",
+    "theme_color": "bright_red",
+    "auto_save_reports": true,
+    "reports_dir": "reports"
+}

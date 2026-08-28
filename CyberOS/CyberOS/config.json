@@ -1,0 +1,8 @@
+{
+    "app_name": "CyberOS Ultimate Elite",
+    "version": "6.0",
+    "developer": "Shenouda Sameh",
+    "theme_color": "bright_red",
+    "auto_save_reports": true,
+    "reports_dir": "reports"
+}
