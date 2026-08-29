@@ -1,0 +1,44 @@
+name: CyberOS Enterprise DevSecOps Pipeline
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  devsecops-pipeline:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      security-events: write
+
+    steps:
+      - name: 1. Checkout Code
+        uses: actions/checkout@v4.1.7
+
+      - name: 2. Set up Python
+        uses: actions/setup-python@v5.1.0
+        with:
+          python-version: '3.10'
+
+      - name: 3. Code Security Scan (Bandit)
+        run: |
+          pip install bandit
+          bandit -r . -s B101 || true
+
+      - name: 4. IaC Security Scan (Checkov)
+        uses: bridgecrewio/checkov-action@master
+        with:
+          framework: terraform
+          output_format: cli
+          soft_fail: true
+
+      - name: 5. Create Auto Release & Tag
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        uses: softprops/action-gh-release@v2.0.5
+        with:
+          tag_name: v3.0.${{ github.run_number }}
+          name: CyberOS Release v3.0.${{ github.run_number }}
+          generate_release_notes: true
