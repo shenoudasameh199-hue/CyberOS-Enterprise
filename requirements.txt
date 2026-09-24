@@ -1,4 +1,4 @@
 rich
 qrcode
-PIL
+Pillow
 requests
