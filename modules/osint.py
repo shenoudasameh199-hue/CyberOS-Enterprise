@@ -1,23 +1,28 @@
 import requests
 from rich.console import Console
-from core.database import log_action
+from rich.table import Table
+from core.database import log_event
 
-def username_recon(username):
-    console = Console()
-    console.print(f"[cyan][*] Searching digital footprint for username: '{username}'...[/cyan]\n")
+console = Console()
+
+def run():
+    console.print("\n[bold cyan]=== OSINT Username Footprint Scanner ===[/bold cyan]")
+    username = console.input("[bold yellow]Enter Target Username: [/bold yellow]")
+    if not username:
+        return
+        
     platforms = {
         "GitHub": f"https://github.com/{username}",
-        "Twitter/X": f"https://twitter.com/{username}",
-        "Instagram": f"https://instagram.com/{username}",
-        "Telegram": f"https://t.me/{username}"
+        "Twitter/X": f"https://x.com/{username}",
+        "Instagram": f"https://instagram.com/{username}"
     }
-    for name, url in platforms.items():
-        try:
-            res = requests.get(url, timeout=3, headers={"User-Agent": "CyberOS-Elite"})
-            if res.status_code == 200:
-                console.print(f" [bold green]✔ Found on {name}: {url}[/bold green]")
-            else:
-                console.print(f" [dim]✖ Not found on {name}[/dim]")
-        except:
-            console.print(f" [yellow]! Timeout / Restricted on {name}[/yellow]")
-    log_action("OSINT-Recon", username, "COMPLETED")
+    
+    table = Table(title=f"OSINT Footprint for '{username}'")
+    table.add_column("Platform", style="magenta")
+    table.add_column("Profile URL", style="cyan")
+    
+    for platform, url in platforms.items():
+        table.add_row(platform, url)
+        
+    log_event("OSINT Footprint", username, "COMPLETED", platforms)
+    console.print(table)
