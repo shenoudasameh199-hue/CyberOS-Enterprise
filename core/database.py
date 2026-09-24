@@ -33,6 +33,9 @@ def log_event(module, target, status, details=None):
     conn.commit()
     conn.close()
 
+# Alias لتوافق الموديولات القديمة التي تستدعي log_action
+log_action = log_event
+
 def get_logs(limit=10):
     init_db()
     conn = sqlite3.connect(DB_PATH)
