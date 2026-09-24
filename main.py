@@ -12,24 +12,32 @@ console = Console()
 
 def display_menu():
     console.clear()
-    header_text = "[bold cyan]CYBEROS v8 ENTERPRISE[/bold cyan]\n[bold yellow]DevSecOps & AI Security Framework[/bold yellow] | [green]Made by Shenouda[/green]"
-    console.print(Panel(header_text, expand=False, border_style="cyan"))
+    header_text = (
+        "[bold cyan]      ██████╗██╗   ██╗██████╗ ███████╗██╗  ██╗███████╗[/bold cyan]\n"
+        "[bold cyan]     ██╔════╝╚██╗ ██╔╝██╔══██╗██╔════╝██║  ██║██╔════╝[/bold cyan]\n"
+        "[bold green]     ██║      ╚████╔╝ ██████╔╝█████╗  ███████║███████╗[/bold green]\n"
+        "[bold green]     ██║       ╚██╔╝  ██╔══██╗██╔══╝  ██╔══██║╚════██║[/bold green]\n"
+        "[bold white]     ╚██████╗   ██║   ██████╔╝███████╗██║  ██║███████║[/bold white]\n"
+        "[bold yellow]      ╚═════╝   ╚═╝   ╚═════╝ ╚══════╝╚═╝  ╚═╝╚══════╝ v9 Enterprise Matrix[/bold yellow]\n"
+        "[bold magenta]           DevSecOps Automation Suite | Built by Shenouda[/bold magenta]"
+    )
+    console.print(Panel(header_text, expand=True, border_style="cyan"))
 
-    table = Table(title="[bold white]Active Security Engine Modules[/bold white]", show_header=True, header_style="bold magenta")
+    table = Table(title="[bold white]⚡ CYBEROS V9 MATRIX MODULES ⚡[/bold white]", show_header=True, header_style="bold magenta")
     table.add_column("ID", style="cyan", justify="center", width=4)
     table.add_column("Module Name", style="bold green", width=28)
-    table.add_column("Description", style="white")
+    table.add_column("Capabilities", style="white")
 
     table.add_row("1", "Network Tools", "Basic network utilities and analysis")
     table.add_row("2", "Security Tools", "Port scanning & vulnerability tools")
     table.add_row("3", "Subnet Host Sweeper", "Discover active devices on local subnet")
     table.add_row("4", "OSINT Digital Footprint", "Reconnaissance for usernames across platforms")
-    table.add_row("5", "AI Vulnerability Assessment", "Evaluate target risk levels using AI engine")
+    table.add_row("5", "AI Matrix Radar Engine", "Live async scanning & CVSS risk prediction")
     table.add_row("6", "Web Directory Fuzzer", "Scan URLs for hidden paths & admin panels")
     table.add_row("7", "Cyber Password Generator", "Generate high-entropy passkeys")
     table.add_row("8", "Terminal QR Tools", "Generate QR codes in terminal")
     table.add_row("9", "Audit Logs Viewer", "Inspect historical security scans from SQLite")
-    table.add_row("0", "Exit", "Close the toolkit")
+    table.add_row("0", "Exit Framework", "Safely exit CyberOS Engine")
 
     console.print(table)
 
@@ -53,7 +61,7 @@ def show_audit_logs():
 def main():
     while True:
         display_menu()
-        choice = Prompt.ask("\n[bold yellow]Choose an option[/bold yellow]", default="0")
+        choice = Prompt.ask("\n[bold yellow]CyberOS Shell > Select Module[/bold yellow]", default="5")
 
         if choice == "1":
             network.run()
@@ -74,13 +82,13 @@ def main():
         elif choice == "9":
             show_audit_logs()
         elif choice == "0":
-            console.print("[bold red]Exiting CyberOS Enterprise... Goodbye![/bold red]")
+            console.print("[bold red]Deactivating CyberOS Engine... System Shutdown.[/bold red]")
             sys.exit(0)
         else:
-            console.print("[bold red]Invalid option! Try again.[/bold red]")
+            console.print("[bold red]Invalid selection![/bold red]")
             time.sleep(1)
 
-        input("\nPress Enter to return to main menu...")
+        input("\n[dim]Press Enter to return to CyberOS Matrix Command Center...[/dim]")
 
 if __name__ == "__main__":
     main()

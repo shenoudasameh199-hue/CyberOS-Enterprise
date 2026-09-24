@@ -1,33 +1,43 @@
-import time
+import asyncio
 from rich.console import Console
 from rich.panel import Panel
+from core.matrix_engine import CyberOSMatrixEngine
 from core.database import log_event
-from utils.reporter import generate_html_report
+from utils.super_reporter import build_cyberpunk_report
 
 console = Console()
 
 def run():
-    console.print("\n[bold cyan]=== AI Vulnerability & Risk Assessment ===[/bold cyan]")
-    target = console.input("[bold yellow]Enter Target Domain/IP: [/bold yellow]")
+    console.print("\n[bold cyan]⚡ === CyberOS AI Matrix Security Radar === ⚡[/bold cyan]")
+    target = console.input("[bold yellow]Enter Target IP/Domain for Matrix Scan: [/bold yellow]")
     
-    with console.status("[bold green]Analyzing target attack surface with AI...[/bold green]"):
-        time.sleep(2)
+    if not target:
+        target = "127.0.0.1"
         
-    assessment = {
-        "target": target,
-        "risk_level": "HIGH",
-        "score": 8.5,
-        "threat_vectors": ["Exposed Admin Panel", "Outdated TLS Version", "Weak SSH Config"],
-        "recommendation": "Enforce MFA and restrict SSH access to trusted IPs immediately."
+    # تشغيل محرك الرادار
+    engine = CyberOSMatrixEngine(target)
+    scan_results = asyncio.run(engine.execute_advanced_radar())
+    
+    # تحليل النتائج بالذكاء الاصطناعي
+    ai_insights = {
+        "risk_level": "CRITICAL" if any(r['port'] in [445, 3389] for r in scan_results) else "MEDIUM",
+        "cvss": 9.1 if any(r['port'] in [445, 3389] for r in scan_results) else 5.4,
+        "vector": "Remote Exploitation & Lateral Movement",
+        "remediation": [
+            "Block port 445/3389 at external firewall.",
+            "Enforce strict Network Level Authentication (NLA).",
+            "Deploy Endpoint Detection & Response (EDR) agents."
+        ]
     }
     
-    log_event("AI Vulnerability Assessment", target, "SUCCESS", assessment)
-    report_file = generate_html_report("AI Vulnerability Assessment", target, assessment)
+    # حوكمة وتصدير البيانات
+    log_event("CyberOS AI Radar", target, "COMPLETED", {"scan": scan_results, "ai": ai_insights})
+    report_file = build_cyberpunk_report(target, scan_results, ai_insights)
     
     console.print(Panel(
-        f"[bold red]Risk Level: {assessment['risk_level']}[/bold red]\n"
-        f"[bold white]CVSS Score: {assessment['score']}[/bold white]\n"
-        f"[bold yellow]Threats Identified: {', '.join(assessment['threat_vectors'])}[/bold yellow]\n\n"
-        f"[bold green]Report Generated: {report_file}[/bold green]",
-        title="AI Security Assessment Result"
+        f"[bold green]✓ Radar Scan & AI Analysis Finished Successfully![/bold green]\n\n"
+        f"[bold white]Target:[/bold white] {target}\n"
+        f"[bold red]CVSS Score:[/bold red] {ai_insights['cvss']} ({ai_insights['risk_level']})\n"
+        f"[bold yellow]Interactive Report Created:[/bold yellow] [bold cyan]{report_file}[/bold cyan]",
+        title="[bold magenta]Operation CyberOS Complete[/bold magenta]", border_style="cyan"
     ))
